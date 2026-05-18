@@ -158,22 +158,70 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
 .nav-toggle {
   display: inline-flex; flex-direction: column; gap: 5px;
   background: transparent; border: 0; cursor: pointer; padding: 8px;
+  z-index: 51;  /* above the dropdown panel so the hamburger stays clickable */
 }
-.nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text-color); }
+.nav-toggle span {
+  display: block; width: 22px; height: 1.5px; background: var(--text-color);
+  transition: transform .22s ease, opacity .15s ease;
+  transform-origin: center;
+}
+/* Hamburger → X when open */
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile (default): full-width dropdown panel from under the header.
+   JS toggles [data-open="true"] on .nav-links — see script.js. */
 .nav-links {
-  display: none;
-  gap: var(--s-4);
-  align-items: center;
+  display: flex; flex-direction: column;
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: rgba(250, 245, 238, 0.98);
+  backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding: var(--s-2) var(--s-4) var(--s-4);
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .22s ease, opacity .22s ease;
+}
+.nav-links[data-open="true"] {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 .nav-links a {
   color: var(--text-color);
-  font-size: 0.78rem; font-weight: 500;
+  font-size: 0.85rem; font-weight: 500;
   letter-spacing: 0.16em; text-transform: uppercase;
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--line);
 }
+.nav-links a:last-child { border-bottom: 0; }
 .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+/* Desktop: inline horizontal nav — reset all the dropdown styling */
 @media (min-width: 1080px) {
   .nav-toggle { display: none; }
-  .nav-links { display: flex; }
+  .nav-links {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--s-4);
+    background: transparent;
+    backdrop-filter: none;
+    border: 0;
+    padding: 0;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    transition: none;
+  }
+  .nav-links a {
+    padding: 0;
+    border: 0;
+    font-size: 0.78rem;
+  }
 }
 
 /* ───────── Hero (face-first) ───────── */
@@ -665,6 +713,14 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
 .page--weird .brand, .page--weird .nav-links a { color: var(--weird-cream); }
 .page--weird .nav-links a:hover, .page--weird .nav-links a.active { color: #fff; }
 .page--weird .nav-toggle span { background: var(--weird-cream); }
+/* Match the mobile dropdown bg to the coral-red header on the Weird page */
+@media (max-width: 1079.98px) {
+  .page--weird .nav-links {
+    background: rgba(214, 61, 54, 0.98);
+    border-bottom-color: rgba(255,255,255,0.2);
+  }
+  .page--weird .nav-links a { border-bottom-color: rgba(255,255,255,0.15); }
+}
 .page--weird .page-hero { background: var(--weird-bg); }
 .page--weird h1, .page--weird h2, .page--weird h3 { color: var(--weird-cream); }
 .page--weird .eyebrow { color: var(--weird-pink); }
