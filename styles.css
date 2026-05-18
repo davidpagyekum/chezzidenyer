@@ -780,6 +780,80 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
 .contact-info__item h4 { margin-bottom: 6px; }
 .contact-info__item a { color: var(--accent); font-weight: 600; }
 
+/* ───────── One-pager additions ─────────
+   Single-page version reuses everything above; these patterns are new only
+   for the consolidated `one-pager.html`. */
+
+/* Topic pills — used on Media & Speaking (topics list) and Lello / Weird sections (offerings). */
+.topic-pills {
+  list-style: none; padding: 0; margin: var(--s-3) 0 0;
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.topic-pills li {
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.6);
+  color: var(--text-color);
+}
+.topic-pills--lg li {
+  font-size: 0.84rem;
+  padding: 9px 16px;
+}
+
+/* "Coming soon" / "Launching soon" inline tag next to a CTA button. */
+.coming-tag {
+  display: inline-flex; align-items: center;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 var(--s-2);
+}
+
+/* Weird Club feature image (logo) — sits in a copy-band cell at section width. */
+.weird-feature {
+  max-width: 460px; margin: 0 auto;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.weird-feature img { display: block; width: 100%; height: auto; }
+
+/* Product grid — placeholder shop tiles until Shopify is wired in. */
+.product-grid {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+}
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--s-4);
+  display: flex; flex-direction: column;
+}
+.product-card h4 {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 1.2rem; margin: var(--s-2) 0 6px;
+  color: var(--text-color);
+}
+.product-card p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+.product-card__badge {
+  align-self: flex-start;
+  font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 4px 10px; border-radius: 999px;
+}
+.product-card__badge--soon {
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
 /* ───────── Shop placeholder grid ───────── */
 .shop-grid {
   display: grid; gap: var(--s-4);
