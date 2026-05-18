@@ -92,6 +92,60 @@ CSS scroll-snap based (no JS dependency). Anchor-link dots (`#hero-slide-1` thro
 - Live Mailchimp form `action` URL.
 - Live Shopify/WooCommerce shop integration.
 
+## Live preview (GitHub Pages)
+
+**Live URL** — https://davidpagyekum.github.io/chezzidenyer/ (share this with the client)
+**Repo** — https://github.com/davidpagyekum/chezzidenyer (public, but every page carries `<meta name="robots" content="noindex,nofollow">` so search engines don't index it)
+
+### Two checkouts, one source of truth
+
+| Location | Purpose |
+|----------|---------|
+| `themes/chezzidenyer/mvp/` (here) | **Source.** Edit HTML/CSS here. This is what the agent works on. |
+| `~/Documents/chezzidenyer-preview/` | **Deploy mirror.** Flattened structure (`index.html` at root, `media-library/` alongside). This is the GitHub repo. **Do NOT edit directly** — it gets overwritten by the deploy script. |
+
+The flattening means image paths differ:
+- Source uses `../media-library/X.jpg` (because HTML lives in `mvp/` and images are one dir up)
+- Deploy uses `media-library/X.jpg` (because HTML is at the repo root, sibling to `media-library/`)
+
+The deploy script handles the path rewrite automatically — never hand-edit the mirror.
+
+### Deploying after a change
+
+```bash
+# From the patterns-library root:
+bash themes/chezzidenyer/deploy.sh "your commit message"
+```
+
+That script:
+1. Copies `mvp/*.html`, `mvp/styles.css`, `mvp/README.md`, and `media-library/` into the mirror
+2. Rewrites `../media-library/` → `media-library/` in every HTML file
+3. Ensures every HTML page has `<meta name="robots" content="noindex,nofollow">` right after the viewport meta tag
+4. Commits + pushes to `origin/main`
+5. GitHub Pages rebuilds automatically (~1 min)
+
+If you skip the script and copy files by hand, you WILL break image paths and/or lose the noindex meta. Use the script.
+
+### Hard rules for the next agent
+
+1. **Never edit `~/Documents/chezzidenyer-preview/` directly.** All edits go through `themes/chezzidenyer/mvp/` then `deploy.sh`.
+2. **Never remove the `robots` meta tag.** It's the only thing keeping this off Google while the client is reviewing. The deploy script auto-adds it, but if you hand-write a new HTML page in `mvp/`, you don't need to add it there — the script injects it during deploy. Just don't strip it from the mirror manually.
+3. **Don't make the GitHub repo private.** Account is on the Free plan; private repos can't publish Pages on Free, so the URL would go dark immediately.
+4. **Image-library changes** — drop new files into `themes/chezzidenyer/media-library/` (source). The script syncs the whole folder, so the mirror picks them up. Originals are at `themes/chezzidenyer/media-library-original/` (16M, full-resolution, do NOT delete — that's the only backup of client assets above 1280px).
+5. **New HTML pages** — add to `themes/chezzidenyer/mvp/`. Then run `deploy.sh`. Path rewrite + noindex injection happen automatically.
+6. **Custom domain (e.g. `preview.chezzidenyer.com.au`)** — add a CNAME record at the registrar pointing to `davidpagyekum.github.io`, drop a `CNAME` file containing the bare domain into the source MVP folder (or directly into the mirror as a special case), then `gh api /repos/davidpagyekum/chezzidenyer/pages -X PUT -f cname=preview.chezzidenyer.com.au`.
+
+### Verifying after a deploy
+
+```bash
+# Wait for Pages build:
+gh api /repos/davidpagyekum/chezzidenyer/pages/builds/latest --jq '.status'
+
+# Smoke test (should all return 200):
+curl -sS -o /dev/null -w "%{http_code}\n" https://davidpagyekum.github.io/chezzidenyer/
+curl -sS -o /dev/null -w "%{http_code}\n" https://davidpagyekum.github.io/chezzidenyer/the-weird-club.html
+```
+
 ## Mapping to Etch components (next phase)
 
 | MVP section | Likely Etch component |
