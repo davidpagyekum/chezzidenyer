@@ -347,14 +347,40 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
   color: var(--accent);
   margin-top: -8px; margin-bottom: var(--s-3);
 }
-.book-copy .author { font-style: italic; font-family: var(--display); color: var(--text-color); margin-bottom: var(--s-2); }
-.book-copy .author-tag {
-  display: inline-block;
-  background: var(--primary); color: var(--bg);
-  font-family: var(--body); font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  padding: 6px 12px; border-radius: 999px;
+.book-copy .author {
+  font-style: italic; font-family: var(--display);
+  color: var(--text-color);
+  line-height: 1.35;            /* tight two-line stack: "By Chezzi Denyer" / "Number One Bestselling Author" */
   margin-bottom: var(--s-3);
+}
+
+/* Circular "#1 Bestselling Author" seal — sticker on the book cover corner.
+   Gold seal with dark text, slight rotation for that book-sticker feel. */
+.book-cover__badge {
+  position: absolute;
+  top: -14px; right: -14px;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: var(--secondary);
+  color: var(--primary);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  font-family: var(--body);
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  line-height: 1.15;
+  transform: rotate(-8deg);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  z-index: 2;
+}
+.book-cover__badge strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.6rem; font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  margin-bottom: 3px;
 }
 .book-copy .actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-4); }
 .book-copy .intl-link {
@@ -469,20 +495,13 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
   transition: opacity .25s ease, transform .25s ease;
 }
 .arm-card:hover .arm-card__bg { opacity: 0.8; transform: scale(1.04); }
-.arm-card--with-image { color: #fff; background: var(--primary-dark); border-color: transparent; }
-.arm-card--with-image::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(20,15,14,0.55) 0%, rgba(20,15,14,0.92) 100%);
-}
-.arm-card--with-image h3, .arm-card--with-image .arm-cta { color: #fff; }
-.arm-card--with-image .arm-eyebrow { color: var(--secondary-hover); text-shadow: 0 1px 6px rgba(0,0,0,0.4); }
-.arm-card--with-image p { color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
-.arm-card--with-image h3 { text-shadow: 0 1px 10px rgba(0,0,0,0.55); }
 .arm-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--accent);
 }
+/* Base sub-element styles — modifier rules below override these via source order
+   (modifiers have equal specificity, so they must appear AFTER to win). */
 .arm-card .arm-eyebrow {
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--accent);
@@ -499,6 +518,18 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
   color: var(--primary);
 }
 .arm-card .arm-cta::after { content: " →"; }
+
+/* Modifier: image-bg cards (Media & Speaking, Shop). Must come AFTER base sub-rules
+   above — equal specificity, source order wins. */
+.arm-card--with-image { color: #fff; background: var(--primary-dark); border-color: transparent; }
+.arm-card--with-image::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(20,15,14,0.55) 0%, rgba(20,15,14,0.92) 100%);
+}
+.arm-card--with-image h3, .arm-card--with-image .arm-cta { color: #fff; }
+.arm-card--with-image .arm-eyebrow { color: var(--secondary-hover); text-shadow: 0 1px 6px rgba(0,0,0,0.4); }
+.arm-card--with-image p { color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+.arm-card--with-image h3 { text-shadow: 0 1px 10px rgba(0,0,0,0.55); }
 
 .arm-card--lello { background: var(--lello-bg); border-color: transparent; }
 .arm-card--lello .arm-eyebrow, .arm-card--lello .arm-cta { color: var(--lello-ink); }
