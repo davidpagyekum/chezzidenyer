@@ -145,7 +145,7 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
 }
 .nav {
   display: flex; align-items: center; justify-content: space-between;
-  padding: var(--s-3) 0;
+  padding-block: var(--s-3);  /* keep .container's horizontal padding — shorthand here would zero it */
 }
 .brand {
   font-family: var(--display); font-size: 1.4rem; font-weight: 300;
