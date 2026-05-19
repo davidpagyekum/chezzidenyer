@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Chezzi Denyer — Section Variants (B&W demo)</title>
+<meta name="description" content="Internal demo: all section variants in the client's pure black & white Inter aesthetic. Pick which version to assemble per section.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="media-library/cropped-Chezzi-Denyer-Favicon.jpeg">
+<style>
+/* ────────────────────────────────────────────────────────────────────
+   B&W demo styles — self-contained. Does NOT load styles.css, so this
+   file can't visually contaminate the working MVP. Pure black on pure
+   white, Inter only (no Fraunces), all-caps headings, no italics.
+   ──────────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+:root {
+  --fg: #000;
+  --bg: #fff;
+  --muted: #666;
+  --line: #000;
+  --hairline: rgba(0,0,0,0.12);
+  --s-1: 4px;  --s-2: 8px;  --s-3: 16px; --s-4: 24px;
+  --s-5: 36px; --s-6: 56px; --s-7: 80px; --s-8: 112px;
+}
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit; font-weight: 700;
+  letter-spacing: 0; line-height: 1.05;
+  text-transform: uppercase;
+  margin: 0;
+}
+p { margin: 0 0 1em; }
+
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--s-4); }
+.section   { padding-block: var(--s-7); }
+.section + .section { border-block-start: 1px solid var(--line); }
+.eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase;
+}
+.tracked { letter-spacing: 0.16em; text-transform: uppercase; }
+
+/* Demo chrome — shown only on this assembly page */
+.demo-bar {
+  position: sticky; top: 0; z-index: 50;
+  background: #000; color: #fff;
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  padding: 10px var(--s-4);
+  text-align: center;
+}
+.demo-label {
+  display: inline-block;
+  background: #000; color: #fff;
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  padding: 8px 14px;
+  margin-bottom: var(--s-5);
+}
+.section--demo-divider {
+  padding-block: var(--s-4);
+  background: #000; color: #fff;
+  text-align: center;
+}
+.section--demo-divider h2 {
+  font-size: 14px; letter-spacing: 0.4em;
+}
+
+/* Generic helpers */
+.cols-2 { display: grid; gap: var(--s-6); }
+@media (min-width: 900px) { .cols-2 { grid-template-columns: 1fr 1fr; } }
+.cols-2--narrow { gap: var(--s-5); }
+@media (min-width: 900px) { .cols-2--narrow { grid-template-columns: 0.9fr 1.1fr; } }
+
+/* Buttons / links */
+.btn {
+  display: inline-block;
+  padding: 14px 22px;
+  border: 1px solid var(--fg);
+  background: transparent;
+  font: inherit; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover { background: var(--fg); color: var(--bg); }
+.btn--solid { background: var(--fg); color: var(--bg); }
+.btn--solid:hover { background: transparent; color: var(--fg); }
+.arrow-link {
+  font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 12px; text-decoration: none;
+  border-block-end: 1px solid var(--fg);
+  padding-block-end: 2px;
+}
+
+/* Index list (numbered) */
+.index-list { list-style: none; padding: 0; margin: 0; }
+.index-list li {
+  display: grid; grid-template-columns: 56px 1fr;
+  align-items: baseline;
+  padding-block: var(--s-3);
+  border-block-end: 1px solid var(--line);
+  font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.index-list li:first-child { border-block-start: 1px solid var(--line); }
+.index-list .num { font-size: 11px; opacity: 0.5; font-weight: 700; }
+.index-list .label { font-size: 22px; }
+.index-list .meta { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; opacity: 0.6; margin-block-start: 4px; }
+@media (min-width: 700px) { .index-list .label { font-size: 32px; } }
+
+/* Topic ticker (pipe-separated) */
+.ticker {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  line-height: 2;
+}
+.ticker span + span::before { content: " · "; opacity: 0.4; }
+
+/* Image grid */
+.photo-grid { display: grid; gap: var(--s-3); }
+@media (min-width: 700px) { .photo-grid--2 { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 700px) { .photo-grid--3 { grid-template-columns: repeat(3, 1fr); } }
+.photo-grid figure { margin: 0; }
+.photo-grid img { aspect-ratio: 4/5; object-fit: cover; width: 100%; height: 100%; }
+.photo-grid figcaption {
+  margin-block-start: 10px;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Full-bleed image */
+.full-bleed { width: 100vw; margin-inline: calc(50% - 50vw); }
+.full-bleed img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.full-bleed img.tall { aspect-ratio: 21/9; }
+
+/* Big stunt typography */
+.stunt {
+  font-size: clamp(120px, 28vw, 420px);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+/* Underlined form */
+.form-bare { display: grid; gap: var(--s-5); max-width: 720px; }
+.form-bare .field { display: grid; gap: 6px; }
+.form-bare label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+.form-bare input, .form-bare textarea {
+  border: 0; border-block-end: 1px solid var(--fg);
+  padding: 10px 0; background: transparent;
+  font: inherit; color: inherit;
+  border-radius: 0;
+}
+.form-bare textarea { min-height: 120px; resize: vertical; }
+.form-bare input:focus, .form-bare textarea:focus { outline: 0; border-block-end-width: 2px; }
+
+/* Vinyl podcast cards */
+.vinyl-grid { display: grid; gap: var(--s-5); }
+@media (min-width: 700px) { .vinyl-grid { grid-template-columns: 1fr 1fr; } }
+.vinyl-card .sleeve {
+  aspect-ratio: 1/1;
+  background: #f1f1f1;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 28px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  text-align: center; padding: var(--s-4);
+}
+.vinyl-card .meta { margin-block-start: var(--s-3); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+.vinyl-card h3 { font-size: 22px; margin: 6px 0 var(--s-2); }
+.vinyl-card p { margin: 0 0 var(--s-3); }
+
+/* Now-playing row */
+.row-list { display: grid; gap: 0; }
+.row-list .row {
+  display: grid; grid-template-columns: 64px 1fr auto;
+  align-items: center; gap: var(--s-3);
+  padding-block: var(--s-3);
+  border-block-end: 1px solid var(--line);
+}
+.row-list .row:first-child { border-block-start: 1px solid var(--line); }
+.row-list .row .thumb {
+  width: 64px; height: 64px; background: #f1f1f1;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 9px; letter-spacing: 0.1em; text-align: center;
+  padding: 4px;
+}
+.row-list .row h4 { font-size: 14px; margin: 0 0 2px; }
+.row-list .row p { margin: 0; font-size: 13px; color: var(--muted); }
+
+/* Product look-book */
+.product-look { display: grid; gap: var(--s-5); }
+@media (min-width: 700px) { .product-look { grid-template-columns: 1fr 1fr; } }
+.product-look figure { margin: 0; }
+.product-look img { aspect-ratio: 3/4; object-fit: cover; width: 100%; background: #f1f1f1; }
+.product-look figcaption {
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: var(--s-3);
+  margin-block-start: var(--s-3);
+  font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+}
+.product-look .num { opacity: 0.5; }
+.product-look .status { color: var(--muted); }
+
+/* Address book big-type */
+.addr-block { display: grid; gap: var(--s-3); }
+.addr-block h3 {
+  font-size: clamp(28px, 5vw, 56px);
+  line-height: 1;
+}
+.addr-block .small { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; }
+.addr-block .email {
+  font-size: clamp(20px, 3vw, 34px);
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  word-break: break-all;
+}
+
+/* Mini header so the page has some context */
+.mini-header {
+  border-block-end: 1px solid var(--line);
+  padding-block: var(--s-3);
+}
+.mini-header .container { display: flex; justify-content: space-between; align-items: center; }
+.mini-header strong { font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; font-size: 14px; }
+.mini-header nav { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+.mini-header nav a { margin-left: var(--s-3); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">B&amp;W demo — pick one variant per section, ping me with the letters (e.g. "Lello B, Weird A, Media C…") and I'll assemble the final page</div>
+
+<header class="mini-header">
+  <div class="container">
+    <strong>Chezzi&nbsp;Denyer</strong>
+    <nav class="tracked">Home · Book · About · Lello · Weird · Media · Shop · Contact</nav>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     LELLO LADIES — VERSIONS A / B / C
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="section--demo-divider"><h2>Lello Ladies</h2></section>
+
+<!-- LELLO A — Lookbook strip -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Lello A · Lookbook strip</span>
+  </div>
+  <div class="full-bleed">
+    <img class="tall" src="media-library/Chezzi-Denyer-3.jpg" alt="">
+  </div>
+  <div class="container" style="margin-block-start: var(--s-5);">
+    <h2 style="font-size: clamp(28px, 4vw, 48px); max-width: 18ch;">Lello Ladies — A safe space for women.</h2>
+    <p class="ticker" style="margin-block: var(--s-4) var(--s-5);">
+      <span>Oracle Cards</span><span>Tarot</span><span>Meditations</span><span>Circles</span><span>Retreats</span><span>Journals</span><span>Intuition</span>
+    </p>
+    <a href="#" class="arrow-link">Join the Circle →</a>
+  </div>
+</section>
+
+<!-- LELLO B — Two-column index -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Lello B · Two-column index</span>
+    <div class="cols-2 cols-2--narrow">
+      <div>
+        <span class="eyebrow">Soft + Sacred</span>
+        <h2 style="font-size: clamp(40px, 6vw, 88px); margin-block-start: var(--s-3);">Lello<br>Ladies.</h2>
+        <p style="max-width: 32ch; margin-block-start: var(--s-4);">The feminine arm of the brand. A modern, gentle space for women who want spirituality without intimidation. Launching soon.</p>
+        <a href="#" class="arrow-link" style="margin-block-start: var(--s-4); display: inline-block;">Join the Circle →</a>
+      </div>
+      <ul class="index-list">
+        <li><span class="num">01</span><span><span class="label">Oracle Cards</span></span></li>
+        <li><span class="num">02</span><span><span class="label">Tarot</span></span></li>
+        <li><span class="num">03</span><span><span class="label">Meditations</span></span></li>
+        <li><span class="num">04</span><span><span class="label">Women's Circles</span></span></li>
+        <li><span class="num">05</span><span><span class="label">Retreats</span></span></li>
+        <li><span class="num">06</span><span><span class="label">Journals</span></span></li>
+        <li><span class="num">07</span><span><span class="label">Intuition Dev.</span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LELLO C — Photo + text split -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Lello C · Photo + text split</span>
+    <div class="cols-2">
+      <figure style="margin: 0;">
+        <img src="media-library/Chezzi-Denyer-3.jpg" alt="" style="aspect-ratio: 4/5; object-fit: cover;">
+      </figure>
+      <div>
+        <span class="eyebrow">Soft + Sacred</span>
+        <h2 style="font-size: clamp(28px, 3.4vw, 44px); margin-block-start: var(--s-3); max-width: 16ch;">Lello Ladies. A safe space for women.</h2>
+        <p style="margin-block-start: var(--s-4); max-width: 44ch;">Oracle cards, women's circles, retreats and gentle tools for the quiet inner work. Sacred — never mystical for mystical's sake.</p>
+        <p style="max-width: 44ch;">For the woman who wants to trust herself again. Who's curious about intuition but doesn't want a smoke ceremony.</p>
+        <a href="#" class="arrow-link" style="margin-block-start: var(--s-4); display: inline-block;">Join the Circle →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     THE WEIRD CLUB — VERSIONS A / B / C
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="section--demo-divider"><h2>The Weird Club</h2></section>
+
+<!-- WEIRD A — Manifesto block -->
+<section class="section" style="min-height: 80vh; display: grid; align-content: center;">
+  <div class="container">
+    <span class="demo-label">Weird A · Manifesto block</span>
+    <div style="text-align: center; padding-block: var(--s-6);">
+      <span class="eyebrow" style="display: block; margin-block-end: var(--s-6);">The Weird Club</span>
+      <h2 style="font-size: clamp(32px, 5vw, 72px); max-width: 22ch; margin: 0 auto; line-height: 1.05;">
+        The club you never had to be invited into.
+      </h2>
+      <p class="ticker" style="margin-block-start: var(--s-6);">
+        <span>Podcast</span><span>Merch</span><span>Community</span><span>Belonging</span><span>Coming&nbsp;Soon</span>
+      </p>
+      <a href="#" class="arrow-link" style="display: inline-block; margin-block-start: var(--s-5);">Get on the list →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WEIRD B — Two-column anti-Lello (mirrors Lello B layout) -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Weird B · Two-column anti-Lello (mirror of Lello B)</span>
+    <div class="cols-2 cols-2--narrow">
+      <ul class="index-list">
+        <li><span class="num">01</span><span><span class="label">Podcast</span></span></li>
+        <li><span class="num">02</span><span><span class="label">Merch</span></span></li>
+        <li><span class="num">03</span><span><span class="label">Community</span></span></li>
+        <li><span class="num">04</span><span><span class="label">Belonging</span></span></li>
+        <li><span class="num">05</span><span><span class="label">Live Shows</span></span></li>
+        <li><span class="num">06</span><span><span class="label">Inclusivity</span></span></li>
+      </ul>
+      <div>
+        <span class="eyebrow">Bold + Loud</span>
+        <h2 style="font-size: clamp(40px, 6vw, 88px); margin-block-start: var(--s-3);">The Weird<br>Club.</h2>
+        <p style="max-width: 32ch; margin-block-start: var(--s-4);">The club you never had to be invited into. Podcast, merch and community — coming soon.</p>
+        <a href="#" class="arrow-link" style="margin-block-start: var(--s-4); display: inline-block;">Get on the list →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEIRD C — Big-typography stunt -->
+<section class="section" style="padding-block: var(--s-6);">
+  <div class="container">
+    <span class="demo-label">Weird C · Big-typography stunt</span>
+    <div class="stunt" style="text-align: left; margin-block-start: var(--s-5);">Weird</div>
+    <div style="display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: var(--s-4); margin-block-start: var(--s-4);">
+      <p style="max-width: 36ch; margin: 0; font-size: 14px;">
+        <span class="eyebrow" style="display: block; margin-bottom: 6px;">The Weird Club</span>
+        The club you never had to be invited into. Podcast · Merch · Community.
+      </p>
+      <a href="#" class="arrow-link">Get on the list →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     MEDIA & SPEAKING — VERSIONS A / B / C
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="section--demo-divider"><h2>Media &amp; Speaking</h2></section>
+
+<!-- MEDIA A — Topic index -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Media A · Topic index</span>
+    <div class="cols-2 cols-2--narrow">
+      <div>
+        <span class="eyebrow">Stage + Mic</span>
+        <h2 style="font-size: clamp(40px, 6vw, 88px); margin-block-start: var(--s-3);">Media &amp;<br>Speaking.</h2>
+        <p style="max-width: 32ch; margin-block-start: var(--s-4);">Speaker. Author. Media personality. Conversation starter. Available for keynotes, podcast guesting, interviews and brand collaborations.</p>
+        <a href="mailto:media@grantdenyer.com.au" class="btn btn--solid" style="margin-block-start: var(--s-5);">Book Chezzi</a>
+      </div>
+      <ul class="index-list">
+        <li><span class="num">01</span><span><span class="label">Intuition</span></span></li>
+        <li><span class="num">02</span><span><span class="label">Authenticity</span></span></li>
+        <li><span class="num">03</span><span><span class="label">Identity</span></span></li>
+        <li><span class="num">04</span><span><span class="label">Women's Empowerment</span></span></li>
+        <li><span class="num">05</span><span><span class="label">Grief</span></span></li>
+        <li><span class="num">06</span><span><span class="label">Spirituality</span></span></li>
+        <li><span class="num">07</span><span><span class="label">Embracing Difference</span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA B — Press-kit grid -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Media B · Press-kit grid</span>
+    <span class="eyebrow">Stage + Mic</span>
+    <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-4);">Media &amp; Speaking.</h2>
+    <p class="ticker" style="margin-block-end: var(--s-6);">
+      <span>Intuition</span><span>Authenticity</span><span>Identity</span><span>Women's Empowerment</span><span>Grief</span><span>Spirituality</span><span>Embracing Difference</span>
+    </p>
+    <div class="photo-grid photo-grid--3">
+      <figure>
+        <img src="media-library/Chezzi-Denyer-image-2.jpg" alt="">
+        <figcaption>Stellar Magazine · 2023</figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/Chezzi-Denyer-5-1-scaled.jpg" alt="">
+        <figcaption>It's All True · Studio</figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/Chezzi-Denyer-1.jpg" alt="">
+        <figcaption>Keynote · Sydney 2024</figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/Chezzi-Denyer-7-1-scaled.jpg" alt="">
+        <figcaption>Family · Editorial</figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/Chezzi-Denyer-22-scaled.jpg" alt="">
+        <figcaption>Author portrait · 2024</figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/Chezzi-Denyer-23-scaled.jpg" alt="">
+        <figcaption>Editorial portrait</figcaption>
+      </figure>
+    </div>
+    <a href="mailto:media@grantdenyer.com.au" class="btn btn--solid" style="margin-block-start: var(--s-5);">Book Chezzi</a>
+  </div>
+</section>
+
+<!-- MEDIA C — Single-column document feel -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Media C · Single-column document feel</span>
+    <div style="max-width: 720px; margin: 0 auto;">
+      <span class="eyebrow">Stage + Mic</span>
+      <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-5);">Media &amp; Speaking.</h2>
+
+      <p style="margin-block-end: var(--s-6);">Speaker. Author. Media personality. Conversation starter. Topics Chezzi has lived — intuition, identity, grief, motherhood, the slow brave work of becoming exactly who you are.</p>
+
+      <span class="eyebrow" style="display: block; margin-block-end: var(--s-3);">Available for</span>
+      <ul class="index-list" style="margin-block-end: var(--s-6);">
+        <li><span class="num">01</span><span><span class="label">Keynote Speaking</span><span class="meta">Conferences · Corporate · Universities</span></span></li>
+        <li><span class="num">02</span><span><span class="label">Podcast Guest</span><span class="meta">Long-form · Solo · Panel</span></span></li>
+        <li><span class="num">03</span><span><span class="label">Media Interviews</span><span class="meta">Print · Radio · TV</span></span></li>
+        <li><span class="num">04</span><span><span class="label">Brand Collaborations</span><span class="meta">Long-form partnerships only</span></span></li>
+      </ul>
+
+      <a href="mailto:media@grantdenyer.com.au" class="arrow-link">media@grantdenyer.com.au →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     PODCASTS — VERSIONS A / B
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="section--demo-divider"><h2>Podcasts</h2></section>
+
+<!-- PODCAST A — Vinyl / sleeve -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Podcasts A · Vinyl / sleeve</span>
+    <span class="eyebrow">Watch + Listen</span>
+    <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-6);">Honest conversations.</h2>
+    <div class="vinyl-grid">
+      <div class="vinyl-card">
+        <div class="sleeve">It's All True<br>Podcast</div>
+        <p class="meta">Series 11 · Weekly</p>
+        <h3>It's All True</h3>
+        <p>Big-hearted conversations on intuition, identity and the moments that quietly change a life. With Grant Denyer + George Sargent.</p>
+        <a href="#" class="arrow-link">Listen →</a>
+      </div>
+      <div class="vinyl-card">
+        <div class="sleeve">Mummy Time<br>TV</div>
+        <p class="meta">YouTube · Ongoing</p>
+        <h3>Mummy Time TV</h3>
+        <p>The real, messy, magic side of motherhood — featured episodes and family stories on YouTube.</p>
+        <a href="#" class="arrow-link">Watch →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST B — Now-playing strip -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Podcasts B · Now-playing strip</span>
+    <span class="eyebrow">Watch + Listen</span>
+    <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-5);">Now playing.</h2>
+    <div class="row-list">
+      <div class="row">
+        <div class="thumb">IT'S<br>ALL<br>TRUE</div>
+        <div>
+          <h4>It's All True · Podcast</h4>
+          <p>Series 11. Big-hearted conversations on intuition, identity and the quiet moments that change a life.</p>
+        </div>
+        <a href="#" class="arrow-link">Listen →</a>
+      </div>
+      <div class="row">
+        <div class="thumb">MUMMY<br>TIME<br>TV</div>
+        <div>
+          <h4>Mummy Time TV · YouTube</h4>
+          <p>The real, messy, magic side of motherhood — featured episodes and family stories on YouTube.</p>
+        </div>
+        <a href="#" class="arrow-link">Watch →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     SHOP — VERSIONS A / B
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="section--demo-divider"><h2>Shop</h2></section>
+
+<!-- SHOP A — Product look-book -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Shop A · Product look-book</span>
+    <span class="eyebrow">Take Some Home</span>
+    <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-6);">Shop.</h2>
+    <div class="product-look">
+      <figure>
+        <img src="media-library/Chezzi-Denyer-24.jpg" alt="The Memoir">
+        <figcaption>
+          <span class="num">01</span>
+          <span>The Memoir · $34.95</span>
+          <span class="status">Out Now</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/Chezzi-Denyer-image-1.jpg" alt="Oracle Decks placeholder" style="filter: grayscale(1);">
+        <figcaption>
+          <span class="num">02</span>
+          <span>Oracle Decks</span>
+          <span class="status">Q1 2026</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/Chezzi-Denyer-23-scaled.jpg" alt="Journals placeholder" style="filter: grayscale(1);">
+        <figcaption>
+          <span class="num">03</span>
+          <span>Journals &amp; Workbooks</span>
+          <span class="status">Q2 2026</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="media-library/the-weird-club-logo.jpg" alt="Merch placeholder" style="filter: grayscale(1);">
+        <figcaption>
+          <span class="num">04</span>
+          <span>Merch · Weird Club</span>
+          <span class="status">Coming Soon</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP B — Index list -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Shop B · Index list (zero imagery)</span>
+    <span class="eyebrow">Take Some Home</span>
+    <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-5);">Shop.</h2>
+    <ul class="index-list">
+      <li><span class="num">01</span><span><span class="label">The Memoir</span><span class="meta">$34.95 · Booktopia + Brio</span></span></li>
+      <li><span class="num">02</span><span><span class="label">Oracle Decks</span><span class="meta">Q1 2026</span></span></li>
+      <li><span class="num">03</span><span><span class="label">Journals &amp; Workbooks</span><span class="meta">Q2 2026</span></span></li>
+      <li><span class="num">04</span><span><span class="label">Merch · Weird Club</span><span class="meta">Coming Soon</span></span></li>
+      <li><span class="num">05</span><span><span class="label">Lello Card &amp; Stationery</span><span class="meta">Coming Soon</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     CONTACT — VERSIONS A / B
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="section--demo-divider"><h2>Contact</h2></section>
+
+<!-- CONTACT A — Single-column form -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Contact A · Single-column form (bare inputs)</span>
+    <span class="eyebrow">Get in touch</span>
+    <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-6);">Say hello.</h2>
+
+    <form class="form-bare">
+      <div class="field">
+        <label for="cn-name">Name</label>
+        <input type="text" id="cn-name" name="name" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="cn-email">Email</label>
+        <input type="email" id="cn-email" name="email" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="cn-reason">Reason for getting in touch</label>
+        <input type="text" id="cn-reason" name="reason" placeholder="Media · Speaking · Collaboration · General">
+      </div>
+      <div class="field">
+        <label for="cn-msg">Message</label>
+        <textarea id="cn-msg" name="message"></textarea>
+      </div>
+      <div>
+        <button type="submit" class="btn btn--solid">Send message</button>
+      </div>
+    </form>
+
+    <div style="margin-block-start: var(--s-7); display: flex; gap: var(--s-5); flex-wrap: wrap; font-size: 14px;">
+      <a href="mailto:chezzi@grantdenyer.com.au" class="arrow-link">chezzi@grantdenyer.com.au →</a>
+      <a href="mailto:media@grantdenyer.com.au" class="arrow-link">media@grantdenyer.com.au →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT B — Address-book big-type -->
+<section class="section">
+  <div class="container">
+    <span class="demo-label">Contact B · Address book (big typography)</span>
+    <span class="eyebrow">Get in touch</span>
+    <h2 style="font-size: clamp(28px, 4vw, 48px); margin-block: var(--s-3) var(--s-6);">Say hello.</h2>
+
+    <div class="cols-2" style="gap: var(--s-7);">
+      <div class="addr-block">
+        <span class="small">General</span>
+        <h3>Chezzi@<br>grantdenyer.com.au</h3>
+        <p style="max-width: 36ch;">For everything else — questions, fan mail, partnerships that don't fit elsewhere.</p>
+        <a href="mailto:chezzi@grantdenyer.com.au" class="arrow-link" style="align-self: start;">Send →</a>
+      </div>
+      <div class="addr-block">
+        <span class="small">Media · Speaking · Collab</span>
+        <h3>Media@<br>grantdenyer.com.au</h3>
+        <p style="max-width: 36ch;">Keynote bookings, podcast guesting, brand collaborations and press enquiries.</p>
+        <a href="mailto:media@grantdenyer.com.au" class="arrow-link" style="align-self: start;">Send →</a>
+      </div>
+    </div>
+
+    <details style="margin-block-start: var(--s-7);">
+      <summary class="tracked" style="font-size: 12px; font-weight: 700; cursor: pointer;">Prefer a form? Open here</summary>
+      <form class="form-bare" style="margin-block-start: var(--s-5);">
+        <div class="field">
+          <label for="cb-name">Name</label>
+          <input type="text" id="cb-name" name="name">
+        </div>
+        <div class="field">
+          <label for="cb-email">Email</label>
+          <input type="email" id="cb-email" name="email">
+        </div>
+        <div class="field">
+          <label for="cb-msg">Message</label>
+          <textarea id="cb-msg" name="message"></textarea>
+        </div>
+        <div><button type="submit" class="btn btn--solid">Send</button></div>
+      </form>
+    </details>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     END
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="section--demo-divider">
+  <h2>End — pick one per section</h2>
+</section>
+
+<footer style="background: #000; color: #fff; padding-block: var(--s-7);">
+  <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-4);">
+    <div>
+      <strong style="letter-spacing: 0.16em; text-transform: uppercase;">Chezzi&nbsp;Denyer</strong>
+      <p style="margin-block-start: var(--s-3); max-width: 32ch; font-size: 13px; opacity: 0.7;">Author, speaker, mother. Based in Australia.</p>
+    </div>
+    <nav style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 2;">
+      <a href="mailto:chezzi@grantdenyer.com.au" style="color: inherit; display: block;">chezzi@grantdenyer.com.au</a>
+      <a href="mailto:media@grantdenyer.com.au" style="color: inherit; display: block;">media@grantdenyer.com.au</a>
+      <a href="https://www.instagram.com/chezzidenyer/" target="_blank" rel="noopener noreferrer" style="color: inherit;">Instagram</a> ·
+      <a href="https://www.tiktok.com/@chezzidenyer" target="_blank" rel="noopener noreferrer" style="color: inherit;">TikTok</a> ·
+      <a href="https://web.facebook.com/thechezzidiaries/" target="_blank" rel="noopener noreferrer" style="color: inherit;">Facebook</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
