@@ -891,6 +891,45 @@ em, .italic { font-style: italic; font-family: var(--display); font-weight: 300;
   font-weight: 500;
 }
 
+/* Pull quote — testimonial styling on speaking page */
+.pull-quote {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.15rem, 1.5vw, 1.5rem);
+  line-height: 1.5;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.pull-quote p {
+  margin: 0 0 var(--s-3);
+}
+.pull-quote p:last-of-type {
+  margin-bottom: var(--s-4);
+}
+.pull-quote cite {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Lede — emphasised intro paragraph */
+.lede {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  line-height: 1.55;
+  font-weight: 300;
+  color: var(--text);
+  margin: 0;
+}
+
 /* Utility */
 .text-center { text-align: center; }
 .mt-0 { margin-top: 0 !important; }
